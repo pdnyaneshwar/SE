@@ -1,0 +1,145 @@
+#include<iostream>
+#include<stdlib.h>
+using namespace std;
+class student
+{
+private:
+string name, clas, bloodgroup, contactaddress, dateofbirth;
+int *roll, div;
+long telephonenumber, drivinglicensenumber;
+public:
+friend class teacher;
+student()
+{
+roll=new int;
+name,clas,bloodgroup,contactaddress,dateofbirth=" ";
+*roll, telephonenumber, drivinglicensenumber=0;
+}
+student(student &obj)
+{
+this->name=obj.name;
+this->clas=obj.clas;
+this->bloodgroup=obj.bloodgroup;
+this->contactaddress=obj.contactaddress;
+this->dateofbirth=obj.dateofbirth;
+this->roll=obj.roll;
+this->telephonenumber=obj.telephonenumber;
+this->drivinglicensenumber=obj.drivinglicensenumber;
+}
+~student()
+{
+delete roll;
+}
+inline static void display_header()
+{
+cout<<"\n------------------Student Information System------------------";
+cout<<"\n Name \t Clas \t Blood group \t Contact address \t Date of birth \t Roll number \t Telephone number \t Driving license number";
+}
+void getdata()
+{
+cout<<"\n Enter name:";
+cin>>name;
+cout<<"\n Enter class:";
+cin>>clas;
+cout<<"\n Enter blood group:";
+cin>>bloodgroup;
+cout<<"\n Enter contact address:";
+cin>>contactaddress;
+cout<<"\n Enter Roll number:";
+cin>>*roll;
+cout<<"\n Enter Division:";
+cin>>div;
+cout<<"\n Enter date of birth:";
+cin>>dateofbirth;
+cout<<"\n Enter Telephone number:";
+cin>>telephonenumber;
+cout<<"\n Enter Driving license number:";
+cin>>drivinglicensenumber;
+}
+void display()
+{
+cout<<name<<endl;
+cout<<clas<<endl;
+cout<<bloodgroup<<endl;
+cout<<contactaddress<<endl;
+cout<<roll<<endl;
+cout<<div<<endl;
+cout<<dateofbirth<<endl;
+cout<<telephonenumber<<endl;
+cout<<drivinglicensenumber<<endl;
+}
+};
+class teacher
+{
+int id;
+public:
+teacher()
+{
+id=0;
+}
+void display_t(student &obj1,int t_d)
+{
+try
+{
+if(obj1.div==t_d)
+obj1.display();
+else
+throw(obj1.div);
+}
+catch (int x)
+{
+cout<<"\n Student and division not matched";
+}
+}
+};
+int main()
+{
+student s[5];
+teacher t;
+int ch,count=0;
+do
+{
+cout<<"\n1.Add record:";
+cout<<"\n2.Display record:";
+cout<<"\n3. Copy constructor:";
+cout<<"\n4. Division wise information:";
+cout<<"\n5.Exit";
+cout<<"\nEnter choice:";
+cin>>ch;
+switch(ch)
+{
+case 1:
+s[count].getdata();
+count++;
+break;
+case 2:
+for(int i=0;i<count;i++)
+{
+s[i].display();
+}
+break;
+case 3:
+{
+cout<<"\n copy constructor:";
+student s1;
+s1.getdata();
+student s2(s1);
+s2.display();
+}
+break;
+case 4:
+int t_div,i;
+cout<<"\n Enter division:";
+cin>>t_div;
+for(i=0;i<count;i++)
+{
+t.display_t(s[i],t_div);
+}
+break;
+case 5:
+exit(0);
+
+}
+}while(ch!=3);
+return 0;
+}
